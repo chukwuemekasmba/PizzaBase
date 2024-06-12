@@ -54,4 +54,4 @@ Anti Notion is a revenge app for [Isaas Saas](https://x.com/isaac_saas) who trie
 
 ## Do you even need Notion?
 
-<img alt="Do you even need Notion? - Hipe Craft" src="https://i.pinimg.com/originals/b8/50/72/b85072d28b31955e96ae04ebf61b4676.jpg" width="100%" height="500px" />
+<img alt="Do you even need Notion? - Hipe Craft" src="https://i.pinimg.com/originals/b8/50/72/b85072d28b31955e96ae04ebf61b4676.jpg" width="100%" height="100%" />
