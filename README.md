@@ -49,9 +49,9 @@ Join our community of developers creating universal apps.
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
-# anti-notion
+# What is Anti Notion 🤔
 Anti Notion is a revenge app for [Isaas Saas](https://x.com/isaac_saas) who tried to steal my Notion and business idea. Helps you manage your tasks with ease without needing the gay individuals. You get to build more and be more.
 
 ## Do you even need Notion?
 
-<img alt="Do you even need Notion? - Hipe Craft" src="https://i.pinimg.com/originals/b8/50/72/b85072d28b31955e96ae04ebf61b4676.jpg" width="100%" height="50px" />
+<img alt="Do you even need Notion? - Hipe Craft" src="https://i.pinimg.com/originals/b8/50/72/b85072d28b31955e96ae04ebf61b4676.jpg" width="100%" height="250px" />
