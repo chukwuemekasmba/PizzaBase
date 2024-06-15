@@ -5,13 +5,20 @@ import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
 import { Colors } from "@/src/constants/Colors";
+import { Product } from "../types";
 
-const ProductListItem = ({ product }: any) => {
+export const defaultPizzaImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
+
+type ProductListItemProps = {
+  product: Product
+}
+
+const ProductListItem = ({ product }: ProductListItemProps) => {
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.productContainer}>
-        <Image src={ product.image } style={styles.productImage} />
+        <Image source={{ uri : product.image || defaultPizzaImage }} style={styles.productImage} />
         <ThemedText style={styles.title}>{ product.name }</ThemedText>
         <ThemedText style={styles.price}>${ product.price }</ThemedText>
       </ThemedView>
@@ -24,10 +31,7 @@ export default ProductListItem
 
 const styles = StyleSheet.create({
   container : {
-    flex: 1,
-    alignItems: "flex-start",
-    backgroundColor: "gray",
-    paddingTop: 50,
+    //
   },
 
   productContainer: {
