@@ -1,4 +1,4 @@
-import { StyleSheet,  } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import products from '@/assets/data/products';
 
 import ProductListItem from "@/src/components/ProductListItem";
@@ -7,7 +7,14 @@ import { ThemedView } from '@/src/components/ThemedView';
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ProductListItem product={products[0]}/>
+        <FlatList
+          key={"_"}
+          keyExtractor={item => "_" + item.id}
+          horizontal={false}
+          data={products}
+          renderItem={({ item }) => <ProductListItem product={item}/> }
+          // numColumns={2}
+        />
     </ThemedView>
   );
 }

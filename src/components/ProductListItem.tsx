@@ -31,7 +31,7 @@ export default ProductListItem
 
 const styles = StyleSheet.create({
   container : {
-    //
+    flex: 1
   },
 
   productContainer: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     padding: 20,
-    borderRadius: 12
+    borderRadius: 12,
   },
 
   productImage : {
