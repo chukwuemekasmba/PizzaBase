@@ -1,14 +1,24 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 
 import { HelloWave } from '@/src/components/HelloWave';
-import ParallaxScrollView from '@/src/components/ParallaxScrollView';
+
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
+
+import { Colors } from "@/src/constants/Colors";
+import orders  from "@/assets/data/orders";
+import products from '@/assets/data/products';
+
+const product = products[0]
 
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ThemedText>Pizza Peperoni</ThemedText>
+      <ThemedView style={styles.productContainer}>
+        <Image src={ product.image } style={styles.productImage} />
+        <ThemedText style={styles.title}>{ product.name }</ThemedText>
+        <ThemedText style={styles.price}>${ product.price }</ThemedText>
+      </ThemedView>
     </ThemedView>
   );
 }
@@ -20,22 +30,28 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 
-  titleContainer: {
-    flexDirection: 'row',
+  productContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
     gap: 8,
+    paddingHorizontal: 20,
+    borderRadius: 12
   },
 
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  productImage : {
+    height: 150,
+    width: 150,
+  },
+
+  title :{ 
+    fontSize: 24,
+    fontWeight: "bold",
+    lineHeight: 31,
+  },
+
+  price : {
+    color: Colors.light.tint,
+    fontSize: 16,
   },
   
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
 });
