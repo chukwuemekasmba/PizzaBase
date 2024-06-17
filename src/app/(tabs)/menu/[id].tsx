@@ -16,8 +16,6 @@ const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const product = products.find((p) => p.id.toString() === id);
-
-
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
 
   if (!product) {
@@ -65,7 +63,7 @@ const ProductDetailScreen = () => {
               ))}
           </ThemedView>
         </ThemedView>
-        <ThemedText style={ styles.price } > Price: { product.price } </ThemedText>
+        <ThemedText style={ styles.price } > Price: ${ product.price } </ThemedText>
     </ThemedView>
   )
 }
