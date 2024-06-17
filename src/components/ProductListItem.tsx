@@ -1,11 +1,12 @@
 import React from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { Image, Pressable, StyleSheet } from 'react-native'
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
 import { Colors } from "@/src/constants/Colors";
 import { Product } from "../types";
+import { Link } from 'expo-router';
 
 export const defaultPizzaImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
 
@@ -16,15 +17,17 @@ type ProductListItemProps = {
 const ProductListItem = ({ product }: ProductListItemProps) => {
 
   return (
-    <ThemedView style={styles.productContainer}>
-      <Image 
-        source={{ uri : product.image || defaultPizzaImage }} 
-        style={styles.productImage} 
-        resizeMode='contain'
-      />
-      <ThemedText style={styles.title}>{ product.name }</ThemedText>
-      <ThemedText style={styles.price}>${ product.price }</ThemedText>
-    </ThemedView>
+    <Link href={`/menu/${product.id}`} asChild>
+      <Pressable style={styles.productContainer}>
+        <Image 
+          source={{ uri : product.image || defaultPizzaImage }} 
+          style={styles.productImage} 
+          resizeMode='contain'
+        />
+        <ThemedText style={styles.title}>{ product.name }</ThemedText>
+        <ThemedText style={styles.price}>${ product.price }</ThemedText>
+      </Pressable>
+    </Link>
   )
 }
 
@@ -40,6 +43,8 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 10,
     borderRadius: 12,
+    height: "100%",
+    backgroundColor: "white"
   },
 
   productImage : {
@@ -47,15 +52,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
+
   title :{ 
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
-    lineHeight: 31,
+    lineHeight: 21,
+    textAlign: "center"
   },
 
   price : {
     color: Colors.light.tint,
-    fontSize: 16,
+    fontSize: 14,
   },
   
 });
