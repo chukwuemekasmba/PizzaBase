@@ -16,12 +16,14 @@ type ProductListItemProps = {
 const ProductListItem = ({ product }: ProductListItemProps) => {
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.productContainer}>
-        <Image source={{ uri : product.image || defaultPizzaImage }} style={styles.productImage} />
-        <ThemedText style={styles.title}>{ product.name }</ThemedText>
-        <ThemedText style={styles.price}>${ product.price }</ThemedText>
-      </ThemedView>
+    <ThemedView style={styles.productContainer}>
+      <Image 
+        source={{ uri : product.image || defaultPizzaImage }} 
+        style={styles.productImage} 
+        resizeMode='contain'
+      />
+      <ThemedText style={styles.title}>{ product.name }</ThemedText>
+      <ThemedText style={styles.price}>${ product.price }</ThemedText>
     </ThemedView>
   )
 }
@@ -30,15 +32,13 @@ export default ProductListItem
 
 
 const styles = StyleSheet.create({
-  container : {
-    flex: 1
-  },
-
   productContainer: {
+    flex: 1,
+    maxWidth: "50%",
     flexDirection: 'column',
     alignItems: 'center',
     gap: 8,
-    padding: 20,
+    padding: 10,
     borderRadius: 12,
   },
 
