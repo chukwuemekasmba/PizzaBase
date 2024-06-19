@@ -1,15 +1,34 @@
-import { Stack } from 'expo-router';
+import { Stack, Link } from 'expo-router';
+import { Pressable } from 'react-native';
 import React from 'react';
 
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack>
+    <Stack 
+      screenOptions={{ 
+        headerRight: () => (
+          <Link href="/modal" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <Ionicons 
+                  name={ pressed ? 'cart-outline' : "cart" } 
+                  size={25} 
+                  color={Colors[colorScheme ?? 'light'].tint}
+                  style={{ marginRight: 15, opacity : pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
+          </Link>
+          )
+        }}
+        >
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="[id]" options={{ headerShown: false }} />
     </Stack>
