@@ -1,7 +1,8 @@
-import { Link, Stack, useLocalSearchParams } from 'expo-router';
+import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Image, StyleSheet, Pressable } from 'react-native'
 import { useState } from "react";
 
+import Button from "@/components/Button";
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
@@ -10,6 +11,7 @@ import { defaultPizzaImage } from '@/components/ProductListItem';
 import { PizzaSize } from '@/src/types';
 import products from '@/assets/data/products';
 import { Colors } from '@/src/constants/Colors';
+// import { useCart } from '@/providers/CartProvider';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -17,6 +19,19 @@ const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const product = products.find((p) => p.id.toString() === id);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
+
+  // const { addItem } = useCart();
+
+  const router = useRouter();
+
+  const addToCart = () => {
+    if (!product) {
+      return;
+    }
+
+    // addItem(product, selectedSize);
+    router.push('/cart');
+  };
 
   if (!product) {
     return (
@@ -63,7 +78,10 @@ const ProductDetailScreen = () => {
               ))}
           </ThemedView>
         </ThemedView>
-        <ThemedText style={ styles.price } > Price: ${ product.price } </ThemedText>
+        <ThemedView style={styles.cart}>
+          <ThemedText style={ styles.price } > Price: ${ product.price } </ThemedText>
+          <Button onPress={addToCart} text="Add to cart" />
+        </ThemedView>
     </ThemedView>
   )
 }
@@ -122,5 +140,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: Colors.light.text
+  },
+
+  button : {
+    backgroundColor: Colors.light.tint,
+    color: Colors.light.background,
+    fontSize: 24,
+    fontWeight: "600",
+    padding: 20,
+    width: 300,
+    borderRadius: 10
   }
+  
 })
