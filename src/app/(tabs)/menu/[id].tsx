@@ -47,35 +47,37 @@ const ProductDetailScreen = () => {
   return (
     <ThemedView style={ styles.container }>
       <Stack.Screen options={{ title: product?.name, headerShown: true, headerBackTitleVisible: false }} />
-        <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.productImage} />
-        <ThemedView style={styles.selectContainer}>
-          <ThemedText style={styles.selectTitle}> Select Size </ThemedText>
-          <ThemedView style={styles.sizes}>
-              {sizes.map((size) => (
-                <Pressable
-                  onPress={() => {
-                    setSelectedSize(size);
-                  }}
-                  style={[
-                    styles.size,
-                    {
-                      backgroundColor: selectedSize === size ? '#981515' : '#f5efdb',
-                    },
-                  ]}
-                  key={size}
-                >
-                  <ThemedText
+        <ThemedView>
+          <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.productImage} />
+          <ThemedView style={styles.selectContainer}>
+            <ThemedText style={styles.selectTitle}> Select Size </ThemedText>
+            <ThemedView style={styles.sizes}>
+                {sizes.map((size) => (
+                  <Pressable
+                    onPress={() => {
+                      setSelectedSize(size);
+                    }}
                     style={[
-                      styles.sizeText,
+                      styles.size,
                       {
-                        color: selectedSize === size ? '#f5efdb' : '#702424',
+                        backgroundColor: selectedSize === size ? '#981515' : '#f5efdb',
                       },
                     ]}
+                    key={size}
                   >
-                    {size}
-                  </ThemedText>
-                </Pressable>
-              ))}
+                    <ThemedText
+                      style={[
+                        styles.sizeText,
+                        {
+                          color: selectedSize === size ? '#f5efdb' : '#702424',
+                        },
+                      ]}
+                    >
+                      {size}
+                    </ThemedText>
+                  </Pressable>
+                ))}
+            </ThemedView>
           </ThemedView>
         </ThemedView>
         <ThemedView style={styles.cart}>
@@ -92,9 +94,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "space-around",
     alignItems:"center",
     backgroundColor: 'white',
-    padding: 10
+    padding: 10,
+    width: "100%"
   },
 
   productImage: {
@@ -107,7 +111,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: "flex-start",
-    width: "100%"
+    width: "100%",
+    paddingHorizontal: 20
   },
 
   selectTitle : {
@@ -117,7 +122,7 @@ const styles = StyleSheet.create({
 
   sizes: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginVertical: 10,
     width: "100%"
   },
@@ -142,14 +147,12 @@ const styles = StyleSheet.create({
     color: Colors.light.text
   },
 
-  button : {
-    backgroundColor: Colors.light.tint,
-    color: Colors.light.background,
-    fontSize: 24,
-    fontWeight: "600",
-    padding: 20,
-    width: 300,
-    borderRadius: 10
+  cart : {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    gap: 10
   }
   
 })

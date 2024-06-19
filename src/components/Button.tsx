@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 100,
     marginVertical: 10,
+    width: "100%",
   },
+
   text: {
     fontSize: 16,
     fontWeight: '600',
