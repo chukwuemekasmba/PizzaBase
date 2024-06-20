@@ -14,13 +14,13 @@ export default function TabLayout() {
     <Stack 
       screenOptions={{ 
         headerRight: () => (
-          <Link href="/modal" asChild>
+          <Link href="/cart" asChild>
             <Pressable>
               {({ pressed }) => (
                 <Ionicons 
                   name={ pressed ? 'cart-outline' : "cart" } 
                   size={25} 
-                  color={Colors[colorScheme ?? 'light'].tint}
+                  color={Colors[colorScheme ?? 'light'].tabIconDefault}
                   style={{ marginRight: 15, opacity : pressed ? 0.5 : 1 }}
                 />
               )}
@@ -29,8 +29,8 @@ export default function TabLayout() {
           )
         }}
         >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: true, headerTitle: "Menu" }} />
+        <Stack.Screen name="[id]" options={{ headerShown: false }} />
     </Stack>
   );
 }
