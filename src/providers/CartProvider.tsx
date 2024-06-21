@@ -13,7 +13,7 @@ export const CartContext = createContext<CartType>({
 
 const CartProvider = ({ children }: any ) => {
   return (
-    <CartContext.Provider value={{ items: [], onAddItem: () => {}}} >
+    <CartContext.Provider value={{ items: [], addItem: () => {}}} >
       { children }
     </CartContext.Provider>
   )
