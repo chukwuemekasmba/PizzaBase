@@ -1,4 +1,5 @@
-import { createContext, useContext, PropsWithChildren } from "react";
+import { useState, createContext, useContext, PropsWithChildren } from "react";
+import { randomUUID } from 'expo-crypto';
 import { CartItem, Product } from "../types";
 
 type CartType = {
@@ -11,9 +12,23 @@ export const CartContext = createContext<CartType>({
   addItem: () => {}
 });
 
-const CartProvider = ({ children }: any ) => {
+const CartProvider = ({ children }: PropsWithChildren ) => {
+  const [items, setItems] = useState<CartItem[]>([]);
+
+  const addItem = (product: Product, size: CartItem['size']) => {
+    const newCartItem: CartItem = {
+      id: randomUUID(),
+      product,
+      product_id: product.id,
+      size,
+      quantity: 1
+    };
+
+    setItems([newCartItem, ...items]);
+  };
+
   return (
-    <CartContext.Provider value={{ items: [], addItem: () => {}}} >
+    <CartContext.Provider value={{ items, addItem }} >
       { children }
     </CartContext.Provider>
   )

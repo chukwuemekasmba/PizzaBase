@@ -8,19 +8,18 @@ import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 
-import { PizzaSize } from '@/src/types';
 import products from '@/assets/data/products';
+import { PizzaSize } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
-// import { useCart } from '@/providers/CartProvider';
+import { useCart } from '@/src/providers/CartProvider';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
+  const { addItem } = useCart();
   const product = products.find((p) => p.id.toString() === id);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
-
-  // const { addItem } = useCart();
 
   const router = useRouter();
 
@@ -29,8 +28,9 @@ const ProductDetailScreen = () => {
       return;
     }
 
-    // addItem(product, selectedSize);
+    addItem(product, selectedSize);
     router.push('/cart');
+    console.log("added item")
   };
 
   if (!product) {
