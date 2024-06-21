@@ -1,6 +1,15 @@
-import { createContext } from "react";
+import { createContext, useContext, PropsWithChildren } from "react";
+import { CartItem, Product } from "../types";
 
-const CartContext = createContext({ });
+type CartType = {
+  items: CartItem[];
+  addItem: (product: Product, size: CartItem["size"]) => void;
+}
+
+export const CartContext = createContext<CartType>({ 
+  items: [],
+  addItem: () => {}
+});
 
 const CartProvider = ({ children }: any ) => {
   return (
@@ -11,3 +20,5 @@ const CartProvider = ({ children }: any ) => {
 }
 
 export default CartProvider;
+
+export const useCart = () => useContext(CartContext);
