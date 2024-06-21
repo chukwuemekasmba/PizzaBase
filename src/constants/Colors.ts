@@ -21,6 +21,7 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
+    title: "#007550",
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',

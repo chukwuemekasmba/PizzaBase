@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
 
   price : {
-    color: Colors.light.tint,
+    color: Colors.light.text,
     fontSize: 14,
   },
   

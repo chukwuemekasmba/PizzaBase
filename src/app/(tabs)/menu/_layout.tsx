@@ -20,7 +20,7 @@ export default function TabLayout() {
                 <Ionicons 
                   name={ pressed ? 'cart-outline' : "cart" } 
                   size={25} 
-                  color={Colors[colorScheme ?? 'light'].tint}
+                  color={Colors[colorScheme ?? 'light'].tabIconDefault}
                   style={{ marginRight: 15, opacity : pressed ? 0.5 : 1 }}
                 />
               )}

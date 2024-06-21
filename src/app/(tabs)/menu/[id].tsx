@@ -30,7 +30,6 @@ const ProductDetailScreen = () => {
 
     addItem(product, selectedSize);
     router.push('/cart');
-    console.log("added item")
   };
 
   if (!product) {

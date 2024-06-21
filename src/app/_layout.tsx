@@ -34,7 +34,7 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
-            <Stack.Screen name="cart" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="cart" options={{ presentation: 'modal', headerTitle: "Cart" }} />
           </Stack>
         </CartProvider>
       </ThemeProvider>

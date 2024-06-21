@@ -13,7 +13,7 @@ const Cart = () => {
   return (
     <ThemedView style={styles.cart}>
       <ThemedView style={styles.checkoutContainer}>
-        <ThemedText style={styles.checkoutText}>Proceed to Checkout { items.length } { items.length > 1 ? "items" : "item"} </ThemedText>
+        <ThemedText style={styles.checkoutText}>Proceed to Checkout ({ items.length } { items.length > 1 ? "Items" : "Item"}) </ThemedText>
       </ThemedView>
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </ThemedView>
