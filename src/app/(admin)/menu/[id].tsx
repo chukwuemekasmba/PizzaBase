@@ -2,11 +2,11 @@ import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Image, StyleSheet, Pressable } from 'react-native'
 import { useState } from "react";
 
-import Button from "@/components/Button";
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
-import { defaultPizzaImage } from '@/components/ProductListItem';
+
+import defaultPizzaImage from '@/components/ProductListItem';
 
 import products from '@/assets/data/products';
 import { PizzaSize } from '@/src/types';

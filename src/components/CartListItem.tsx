@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
 import Link from "expo-router";
 
-import { defaultPizzaImage } from "@/src/constants/images";
+import { defaultPizzaImage } from "@/src/constants/Images";
 import { Colors } from "@/src/constants/Colors";
 import { CartItem } from "../types";
 import { useCart } from "../providers/CartProvider";

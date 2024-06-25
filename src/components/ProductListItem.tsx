@@ -6,7 +6,7 @@ import { ThemedText } from '@/src/components/ThemedText';
 
 import { Product } from "../types";
 import { Colors } from "@/src/constants/Colors";
-import { defaultPizzaImage } from '@/src/constants/images';
+import { defaultPizzaImage } from '@/src/constants/Images';
 
 type ProductListItemProps = {
   product: Product

@@ -1,8 +1,6 @@
 import { Stack, Link } from 'expo-router';
 import { Pressable } from 'react-native';
-import React from 'react';
 
-import { TabBarIcon } from '@/src/components/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,7 +16,7 @@ export default function TabLayout() {
           headerShown: true, 
           headerTitle: "Menu",
           headerRight: () => (
-            <Link href="/cart" asChild>
+            <Link href="/menu/create" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <Ionicons 
@@ -38,7 +36,7 @@ export default function TabLayout() {
         options={{ 
           headerShown: false,
           headerRight: () => (
-            <Link href="/cart" asChild>
+            <Link href="/menu/edit" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <Ionicons 
