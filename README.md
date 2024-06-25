@@ -49,5 +49,23 @@ Join our community of developers creating universal apps.
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
-# What is Anti Notion 🤔
-Food ordering App.
+# Order a Pizza 🍕
+
+A pizza ordering app and admin platform.
+
+## Tooling
+
+- React Native
+- Expo
+- Expo-Router
+- Supabase
+
+## Features
+- User and Admin Panels
+- Food Menu & Cart
+- Authentication
+- Ordering & Order Status
+- Backend: Create, Read, Edit and Delete Products.
+- Database
+- Stripe Payments
+- Notifications 
