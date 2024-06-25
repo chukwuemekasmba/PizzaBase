@@ -1,14 +1,14 @@
 import React from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
+import { Link } from 'expo-router';
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
-import { Colors } from "@/src/constants/Colors";
 import { Product } from "../types";
-import { Link } from 'expo-router';
 
-export const defaultPizzaImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
+import { Colors } from "@/src/constants/Colors";
+import { defaultPizzaImage } from '@/src/constants/images';
 
 type ProductListItemProps = {
   product: Product

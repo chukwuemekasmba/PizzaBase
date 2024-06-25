@@ -1,21 +1,39 @@
 import { useState, createContext, useContext, PropsWithChildren } from "react";
 import { randomUUID } from 'expo-crypto';
-import { CartItem, Product } from "../types";
+import { CartItem, Tables } from "../types";
+
+type Product = Tables<'products'>;
 
 type CartType = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
+  updateQuantity: (itemId: string, amount: -1 | 1) => void;
+  total: number;
+  totalQuantity: number;
 }
 
 export const CartContext = createContext<CartType>({ 
   items: [],
-  addItem: () => {}
+  addItem: () => {},
+  updateQuantity: () => {},
+  total: 0,
+  totalQuantity: 0,
 });
 
 const CartProvider = ({ children }: PropsWithChildren ) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addItem = (product: Product, size: CartItem['size']) => {
+    // if already in cart; increment quantity
+    const existingItem = items.find(
+      (item) => item.product === product && item.size === size
+    );
+
+    if (existingItem) {
+      updateQuantity(existingItem.id, 1);
+      return
+    }
+
     const newCartItem: CartItem = {
       id: randomUUID(),
       product,
@@ -27,8 +45,33 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
     setItems([newCartItem, ...items]);
   };
 
+  // updateQuantity
+  const updateQuantity = (itemId: string, amount: -1 | 1) => {
+    setItems(
+      items
+        .map((item) =>
+          item.id !== itemId
+            ? item
+            : { ...item, quantity: item.quantity + amount }
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const total = Number(items.reduce(
+    (sum, item) => (sum += item.product.price * item.quantity),
+    0
+  ).toFixed(2));
+
+  const totalQuantity = Number(items.reduce(
+    (sum, item) => (sum += item.quantity), 0 ).toFixed(2));
+
+  const clearCart = () => {
+    setItems([]);
+  };
+
   return (
-    <CartContext.Provider value={{ items, addItem }} >
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total, totalQuantity }} >
       { children }
     </CartContext.Provider>
   )

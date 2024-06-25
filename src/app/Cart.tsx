@@ -1,19 +1,25 @@
-import React, { useContext } from 'react'
-import { View, Text, Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet, FlatList } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
 import { Colors } from '../constants/Colors';
-import { ThemedView } from '../components/ThemedView';
-import { ThemedText } from '../components/ThemedText';
-import { CartContext } from "@/src/providers/CartProvider";
+import { useCart } from "@/src/providers/CartProvider";
+
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import CartListItem from '../components/CartListItem';
 
 const Cart = () => {
-  const { items } = useContext(CartContext);
+  const { total, items, totalQuantity } = useCart();
 
   return (
     <ThemedView style={styles.cart}>
-      <ThemedView style={styles.checkoutContainer}>
-        <ThemedText style={styles.checkoutText}>Proceed to Checkout ({ items.length } { items.length > 1 ? "Items" : "Item"}) </ThemedText>
+      <FlatList
+        data={items}
+        renderItem={({ item }) => <CartListItem cartItem={item} />}
+        contentContainerStyle={{ gap: 10 }}
+      />
+      <ThemedView style={styles.button}>
+        <ThemedText style={styles.buttonText}>Checkout ({ totalQuantity } { totalQuantity == 1 ? "Item" : "Items"}) ${ total }</ThemedText>
       </ThemedView>
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </ThemedView>
@@ -24,20 +30,23 @@ export default Cart;
 const styles = StyleSheet.create({
   cart: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
+    gap: 10,
+    padding: 10,
+    backgroundColor: Colors.light.background
   },
 
-  checkoutContainer: {
-    backgroundColor: Colors.light.title,
+  button: {
+    backgroundColor: Colors.light.tint,
     padding: 15,
     alignItems: 'center',
     borderRadius: 100,
-    marginVertical: 10,
+    marginBottom: 20,
     width: "80%",
   },
 
-  checkoutText: {
+  buttonText: {
     fontSize: 16,
     fontWeight: '600',
     color: 'white',
