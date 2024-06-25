@@ -1,12 +1,10 @@
 import React from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
-import { Link } from 'expo-router';
+import { Link, useSegments } from 'expo-router';
 
 import { ThemedText } from '@/src/components/ThemedText';
-import { ThemedView } from '@/src/components/ThemedView';
 
 import { Product } from "../types";
-
 import { Colors } from "@/src/constants/Colors";
 import { defaultPizzaImage } from '@/src/constants/images';
 
@@ -15,9 +13,10 @@ type ProductListItemProps = {
 }
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
+  const segments = useSegments();
 
   return (
-    <Link href={`/menu/${product.id}`} asChild>
+    <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.productContainer}>
         <Image 
           source={{ uri : product.image || defaultPizzaImage }} 
