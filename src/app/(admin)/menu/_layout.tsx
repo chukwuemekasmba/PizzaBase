@@ -30,26 +30,6 @@ export default function TabLayout() {
             </Link>
             ) 
         }}
-          />
-      <Stack.Screen 
-        name="[id]" 
-        options={{ 
-          headerShown: false,
-          headerRight: () => (
-            <Link href="/menu/edit" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Ionicons 
-                    name={ pressed ? 'create' : "create-outline" } 
-                    size={25} 
-                    color={Colors[colorScheme ?? 'light'].tint}
-                    style={{ marginRight: 15, opacity : pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-            ) 
-         }}
         />
     </Stack>
   );

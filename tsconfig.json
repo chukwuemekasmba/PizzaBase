@@ -5,7 +5,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [ "./*" ],
-      "@/components/*": ["src/components/*"]
+      "@/components/*": ["src/components/*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/providers/*": ["src/providers/*"],
+      "@/hooks/*": ["src/hooks/*"]
     }
   },
   "include": [

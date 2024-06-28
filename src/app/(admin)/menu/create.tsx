@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import Button from '@/components/Button';
 
@@ -15,6 +15,13 @@ const CreateScreen = () => {
   const [errors, setErrors] = useState('');
 
   const router = useRouter();
+  const { id } = useLocalSearchParams();
+  const isUpdating = !!id;
+
+  const resetFields = () => {
+    setName('');
+    setPrice('');
+  }
 
   const validateInput = () => {
     setErrors('');
@@ -39,6 +46,7 @@ const CreateScreen = () => {
     }
 
     console.warn('Creating dish');
+
     setName('');
     setPrice('');
     setImage('');
@@ -62,6 +70,7 @@ const CreateScreen = () => {
   };
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{ headerTitle: isUpdating ? 'Update Product' : 'Create Product' }} />
       <Image
         source={{ uri: image || defaultPizzaImage }}
         style={styles.image}

@@ -1,22 +1,25 @@
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Image, StyleSheet, Pressable } from 'react-native'
 import { useState } from "react";
+import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
 
-import defaultPizzaImage from '@/components/ProductListItem';
+import { defaultPizzaImage } from '@/src/constants/Images';
 
 import products from '@/assets/data/products';
 import { PizzaSize } from '@/src/types';
-import { Colors } from '@/src/constants/Colors';
-import { useCart } from '@/src/providers/CartProvider';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { useCart } from '@/providers/CartProvider';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
+  const colorScheme = useColorScheme();
   const { addItem } = useCart();
   const product = products.find((p) => p.id.toString() === id);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
@@ -34,10 +37,10 @@ const ProductDetailScreen = () => {
 
   if (!product) {
     return (
-      <ThemedView>
-        <ThemedText> Product Not Found </ThemedText>
+      <ThemedView style={styles.container}>
+        <ThemedText style={styles.name}> Product Not Found </ThemedText>
         <Link href={'/menu'}>
-          <ThemedText>Go Back Home <HelloWave /> </ThemedText>
+          <ThemedText style={styles.price}>Go Back Home <HelloWave /> </ThemedText>
         </Link>
       </ThemedView>
     )
@@ -45,7 +48,27 @@ const ProductDetailScreen = () => {
 
   return (
     <ThemedView style={ styles.container }>
-      <Stack.Screen options={{ title: product?.name, headerShown: true, headerBackTitleVisible: false }} />
+      <Stack.Screen 
+        options={{ 
+          title: product?.name, 
+          headerShown: true, 
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <Link href={`(admin)/menu/create/?id=${id}`} asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <Ionicons 
+                    name={ pressed ? 'create' : "create-outline" } 
+                    size={25} 
+                    color={Colors[colorScheme ?? 'light'].tint}
+                    style={{ marginRight: 15, opacity : pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+            ) 
+          }} 
+        />
         <ThemedView>
           <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.productImage} />
         </ThemedView>
