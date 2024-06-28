@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
@@ -53,6 +53,10 @@ const CreateScreen = () => {
     router.back();
   };
 
+  const onDelete = () => {
+    console.warn('DELETE!!!!!');
+  }
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -68,6 +72,20 @@ const CreateScreen = () => {
       setImage(result.assets[0].uri);
     }
   };
+
+  const confirmDelete = () => {
+    Alert.alert('Confirm', 'Are you sure you want to delete this product ?', [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: onDelete,
+      }
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerTitle: isUpdating ? 'Update Product' : 'Create Product' }} />
@@ -98,6 +116,7 @@ const CreateScreen = () => {
       />
       <Text style={styles.error}>{errors}</Text>
       <Button onPress={onCreate} text="Create" />
+      { isUpdating && <Button mode="outline" onPress={confirmDelete} text="Delete" />}
     </View>
   );
 };
