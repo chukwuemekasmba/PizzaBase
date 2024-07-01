@@ -15,7 +15,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "gainsboro",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.light.tint
+          backgroundColor: Colors.light.text
         } 
       }}>
         <Tabs.Screen name="index" options={{ href: null }} /> 
