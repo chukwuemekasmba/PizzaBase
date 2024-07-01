@@ -6,6 +6,9 @@ import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
 import { Colors } from '@/src/constants/Colors';
+import orders from '@/assets/data/orders';
+import { FlatList } from 'react-native-gesture-handler';
+import OrderListItem from '@/src/components/OrderListItem';
 
 export default function TabTwoScreen() {
   return (
@@ -17,7 +20,9 @@ export default function TabTwoScreen() {
         <ThemedText type="title">Orders</ThemedText>
       </ThemedView>
       <ThemedView>
-
+        { orders.map((order) => (
+            <OrderListItem order={order} key={order.id}/>
+        ))}
       </ThemedView>
     </ParallaxScrollView>
   );
