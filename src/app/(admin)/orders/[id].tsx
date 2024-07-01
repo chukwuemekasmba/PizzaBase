@@ -30,7 +30,7 @@ const OrderDetail = () => {
     <ThemedView style={styles.container}>
       <Stack.Screen options={{ headerShown: true, headerTitle: `Order #${ order !== undefined && order.id }`}} />
       <OrderListItem order={order} />
-      <GestureHandlerRootView>
+      <GestureHandlerRootView  style={{ paddingVertical: 15 }}>
         <FlatList
           data={order?.order_items}
           renderItem={({ item }) => <OrderItemListItem item={item} /> }
