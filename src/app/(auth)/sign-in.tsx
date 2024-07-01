@@ -12,6 +12,10 @@ const SignIn = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
+  const signUpWithEmail = () => {
+
+  }
+
   return (
     <ThemedView style={styles.container}>
       <TextInput 
@@ -26,7 +30,7 @@ const SignIn = () => {
         keyboardType='default'
         autoComplete='current-password'
       />
-      <Button text='Sign In' />
+      <Button text='Sign In' on={signUpWithEmail} />
       <ThemedText style={styles.text}> 
         <Link href={'/(auth)/sign-up'}>
           Create an Account
