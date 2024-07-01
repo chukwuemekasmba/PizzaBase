@@ -1,13 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Collapsible } from '@/src/components/Collapsible';
-import { ExternalLink } from '@/src/components/ExternalLink';
 import ParallaxScrollView from '@/src/components/ParallaxScrollView';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
-import bannerImage from '@/assets/images/food-banner.png';
 import { Colors } from '@/src/constants/Colors';
 
 export default function TabTwoScreen() {
