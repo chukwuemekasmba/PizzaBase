@@ -7,7 +7,6 @@ import { ThemedView } from '@/src/components/ThemedView';
 
 import { Colors } from '@/src/constants/Colors';
 import orders from '@/assets/data/orders';
-import { FlatList } from 'react-native-gesture-handler';
 import OrderListItem from '@/src/components/OrderListItem';
 
 export default function TabTwoScreen() {
@@ -19,7 +18,7 @@ export default function TabTwoScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Orders</ThemedText>
       </ThemedView>
-      <ThemedView>
+      <ThemedView style={styles.orderList}>
         { orders.map((order) => (
             <OrderListItem order={order} key={order.id}/>
         ))}
@@ -35,8 +34,19 @@ const styles = StyleSheet.create({
     left: -35,
     position: 'absolute',
   },
+
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
+    marginBottom: 20
   },
+
+  orderList : {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: '100%',
+    gap: 10
+  }
 });
