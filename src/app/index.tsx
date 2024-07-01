@@ -14,10 +14,8 @@ const index = () => {
         <Button text="Admin" />
       </Link>
       <Link href={'/(auth)'} asChild>
-        <Button text="Auth" />
+        <Button text="Sign In" />
       </Link>
-
-      <Button text="Sign out" />
     </ThemedView>
   );
 };
