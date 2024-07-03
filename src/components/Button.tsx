@@ -9,17 +9,18 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 type ButtonProps = {
   text: string;
   mode?: string;
+  disabled?: boolean;
 } & React.ComponentPropsWithoutRef<typeof Pressable>;
 
 const Button = forwardRef<View | null, ButtonProps>(
-  ({ text, mode, ...pressableProps }, ref) => {
+  ({ text, mode, disabled, ...pressableProps }, ref) => {
     const colorScheme = useColorScheme();
 
     return (
-      <Pressable ref={ref} {...pressableProps} style={mode == 'outline' ? styles.outline : styles.container}>
+      <Pressable ref={ref} {...pressableProps} style={mode == 'outline' || disabled ? styles.outline : styles.container}>
         { ({ pressed }) => (
           <Text 
-            style={ mode == 'outline' ? styles.outlineText : styles.text}>
+            style={ mode == 'outline' || disabled ? styles.outlineText : styles.text}>
             {text} 
           </Text>
     )}

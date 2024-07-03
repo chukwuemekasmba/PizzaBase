@@ -12,12 +12,15 @@ import { Link } from 'expo-router';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const signUpWithEmail = async () => {
+    setLoading(true);
     await supabase.auth.signUp({ email, password })
       .catch((error) => {
         if (error) Alert.alert(error)
       })
+    setLoading(false);
   };
 
   return (
@@ -41,7 +44,7 @@ const SignUp = () => {
       <Button 
         text='Create an Account' 
         onPress={signUpWithEmail}
-        style={styles.button}
+        disabled={loading}
       />
 
       <Link href={'/(auth)/sign-in'}>
