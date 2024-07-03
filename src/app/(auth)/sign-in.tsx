@@ -12,8 +12,8 @@ const SignIn = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
-  const signUpWithEmail = () => {
-
+  const signInWithEmail = () => {
+    
   }
 
   return (
@@ -30,7 +30,7 @@ const SignIn = () => {
         keyboardType='default'
         autoComplete='current-password'
       />
-      <Button text='Sign In' on={signUpWithEmail} />
+      <Button text='Sign In' onPress={signInWithEmail} />
       <ThemedText style={styles.text}> 
         <Link href={'/(auth)/sign-up'}>
           Create an Account

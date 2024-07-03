@@ -1,39 +1,60 @@
-import { useState } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { useEffect, useState } from 'react'
+import { StyleSheet, TextInput, Alert } from 'react-native'
+import { supabase } from '@/src/lib/supabase';
 
+import Button from '@/src/components/Button';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
-import Button from '@/src/components/Button';
 
 import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signUpWithEmail = async () => {
+    await supabase.auth.signUp({ email, password })
+      .catch((error) => {
+        if (error) Alert.alert(error)
+      })
+  };
 
   return (
     <ThemedView style={styles.container}>
-    <TextInput 
-      placeholder='email'
-      style={styles.input}
-    />
-    <TextInput 
-      placeholder='email' 
-      style={styles.input}
-    />
-    <Button text='Create an Account' />
-    <Link href={'/(auth)/sign-in'}>
-      <ThemedText style={styles.text}> 
-          Sign In
-      </ThemedText>
-    </Link>
+      <TextInput 
+        value={email}
+        placeholder='johndoe@gmail.com'
+        style={styles.input}
+        onChangeText={setEmail}
+        inputMode='email'
+      />
+      
+      <TextInput 
+        value={password}
+        placeholder='password' 
+        style={styles.input}
+        onChangeText={setPassword}
+        inputMode='text'
+      />
+
+      <Button 
+        text='Create an Account' 
+        onPress={signUpWithEmail}
+        style={styles.button}
+      />
+
+      <Link href={'/(auth)/sign-in'}>
+        <ThemedText style={styles.text}> 
+            Sign In
+        </ThemedText>
+      </Link>
 
     </ThemedView>
   )
 }
 
-export default SignUp
+export default SignUp;
 
 const styles = StyleSheet.create({
   container : {
