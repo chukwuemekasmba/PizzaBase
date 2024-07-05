@@ -8,7 +8,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { ActivityIndicator } from 'react-native';
 
 const index = () => {
-  const { session, loading } = useAuth();
+  const { session, loading, isAdmin } = useAuth();
 
   if(loading) {
     return <ActivityIndicator/>;
@@ -16,6 +16,10 @@ const index = () => {
 
   if(!session) {
     return <Redirect href={'/(auth)'} />
+  };
+
+  if(!isAdmin) {
+    return <Redirect href={'/(user)'} />
   };
 
   const handleSignOut = async () => {
@@ -30,12 +34,8 @@ const index = () => {
       <Link href={'/(admin)'} asChild>
         <Button text="Admin" />
       </Link>
-      <Link href={'/(auth)'} asChild>
-        <Button text="Sign In" />
-      </Link>
 
-      <Button text="Sign Out" onPress={handleSignOut}/>
-
+      <Button text="Sign Out" onPress={handleSignOut} />
     </ThemedView>
   );
 };

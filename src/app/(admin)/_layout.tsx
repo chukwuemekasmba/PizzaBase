@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { Redirect } from 'expo-router';
+import { useAuth } from '@/src/providers/AuthProvider';
 
 import { TabBarIcon } from '@/src/components/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
@@ -7,6 +8,11 @@ import { useColorScheme } from '@/src/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { isAdmin } = useAuth();
+
+  if (!isAdmin) {
+    return <Redirect href={'/'} />
+  };
 
   return (
     <Tabs
