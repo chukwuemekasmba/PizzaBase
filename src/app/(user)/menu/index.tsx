@@ -9,18 +9,10 @@ import { ThemedView } from "@/src/components/ThemedView";
 import { ThemedText } from "@/src/components/ThemedText";
 import { HelloWave } from "@/src/components/HelloWave";
 import { Link } from "expo-router";
+import { useProductList } from "@/src/api/products";
 
 export default function HomeScreen() {
-  const { data: products, error, isLoading } = useQuery({
-    queryKey: ['products'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('products').select('*');
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
-    }
-  });
+  const { data: products, error, isLoading } = useProductList();
 
   if (isLoading) {
     return <ActivityIndicator/>

@@ -6,7 +6,8 @@ import Button from "@/components/Button";
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
-import { defaultPizzaImage } from '@/components/ProductListItem';
+
+import { defaultPizzaImage } from '@/constants/Images';
 
 import products from '@/assets/data/products';
 import { PizzaSize } from '@/src/types';
