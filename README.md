@@ -61,11 +61,11 @@ A pizza ordering app and admin platform.
 - Supabase
 
 ## Features
-- User and Admin Panels
+- User and Admin User Interface
 - Food Menu & Cart
-- Authentication
+- User & Admin Authentication
 - Ordering & Order Status
 - Backend: Create, Read, Edit and Delete Products.
-- Database
+- Supabase Database
 - Stripe Payments
 - Notifications 
