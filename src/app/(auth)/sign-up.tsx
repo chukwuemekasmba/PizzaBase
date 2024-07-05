@@ -42,7 +42,7 @@ const SignUp = () => {
       />
 
       <Button 
-        text='Create an Account' 
+        text={loading ? 'Creating account...' : 'Create account'} 
         onPress={signUpWithEmail}
         disabled={loading}
       />
