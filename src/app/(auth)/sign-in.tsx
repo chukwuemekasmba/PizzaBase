@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, Alert } from 'react-native'
+import { supabase } from '@/src/lib/supabase';
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
@@ -9,17 +10,23 @@ import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
 
 const SignIn = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const signInWithEmail = () => {
-    
-  }
+  const signInWithEmail = async () => {
+    setLoading(true);
+    await supabase.auth.signInWithPassword({ email, password })
+      .catch((error) => {
+        if (error) Alert.alert(error)
+      })
+    setLoading(false);
+  };
 
   return (
     <ThemedView style={styles.container}>
       <TextInput 
-        placeholder='email'
+        placeholder='janedoe@hotmail.com'
         style={styles.input}
         keyboardType='email-address'
         autoComplete='email'
@@ -30,7 +37,7 @@ const SignIn = () => {
         keyboardType='default'
         autoComplete='current-password'
       />
-      <Button text='Sign In' onPress={signInWithEmail} />
+      <Button text={loading ? 'Signing in' : 'Sign In'} disabled={loading} onPress={signInWithEmail} />
       <ThemedText style={styles.text}> 
         <Link href={'/(auth)/sign-up'}>
           Create an Account
@@ -40,7 +47,7 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignIn;
 
 const styles = StyleSheet.create({
   container : {
