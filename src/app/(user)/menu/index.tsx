@@ -1,23 +1,37 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
-import products from '@/assets/data/products';
 import { supabase } from "@/src/lib/supabase";
+import { useQuery } from "@tanstack/react-query";
 
 import ProductListItem from "@/src/components/ProductListItem";
+import { ThemedView } from "@/src/components/ThemedView";
+import { ThemedText } from "@/src/components/ThemedText";
+import { HelloWave } from "@/src/components/HelloWave";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
-  const [productsList, setProductsList] = useState();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
+  const { data: products, error, isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
       const { data, error } = await supabase.from('products').select('*');
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    }
+  });
 
-      // setProductsList(data);
-    };
+  if (isLoading) {
+    return <ActivityIndicator/>
+  }
 
-    fetchProducts();
-  }, []);
+  if (error) {
+    <ThemedView>
+      <ThemedText style={{ color: "red" }}>Failed to fetch components</ThemedText>
+      <Link href={'/'}>Go back home <HelloWave /> </Link>
+    </ThemedView>
+  }
 
   return (
       <FlatList
