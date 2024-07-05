@@ -1,12 +1,12 @@
-import { Stack } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/src/components/TabBarIcon';
-import { Colors } from '@/src/constants/Colors';
-import { useColorScheme } from '@/src/hooks/useColorScheme';
+import { useAuth } from '@/src/providers/AuthProvider';
+import { Redirect, Stack } from 'expo-router';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { session } = useAuth();
+
+  if(session) {
+    return <Redirect href={'/'} />
+  }
 
   return (
     <Stack>

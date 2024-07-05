@@ -30,14 +30,20 @@ const SignIn = () => {
         style={styles.input}
         keyboardType='email-address'
         autoComplete='email'
+        onChangeText={setEmail}
       />
       <TextInput 
         placeholder='password' 
         style={styles.input}
         keyboardType='default'
         autoComplete='current-password'
+        onChangeText={setPassword}
       />
-      <Button text={loading ? 'Signing in' : 'Sign In'} disabled={loading} onPress={signInWithEmail} />
+      <Button 
+        text={loading ? 'Signing in' : 'Sign In'} 
+        disabled={loading} 
+        onPress={signInWithEmail} 
+      />
       <ThemedText style={styles.text}> 
         <Link href={'/(auth)/sign-up'}>
           Create an Account
