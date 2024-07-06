@@ -1,5 +1,5 @@
 {
-  "name": "order-a-pizza",
+  "name": "pizza-base",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {

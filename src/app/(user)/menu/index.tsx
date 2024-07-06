@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, FlatList, ActivityIndicator, View } from 'react-native';
 
 import { supabase } from "@/src/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +8,9 @@ import ProductListItem from "@/src/components/ProductListItem";
 import { ThemedView } from "@/src/components/ThemedView";
 import { ThemedText } from "@/src/components/ThemedText";
 import { HelloWave } from "@/src/components/HelloWave";
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { useProductList } from "@/src/api/products";
+import { Colors } from "@/src/constants/Colors";
 
 export default function HomeScreen() {
   const { data: products, error, isLoading } = useProductList();
@@ -26,6 +27,7 @@ export default function HomeScreen() {
   }
 
   return (
+    <View style={styles.container}>
       <FlatList
         data={products}
         renderItem={({ item }) => <ProductListItem product={item}/> }
@@ -33,12 +35,12 @@ export default function HomeScreen() {
         contentContainerStyle={{ gap: 10, padding: 10, marginBottom: 40 }}
         columnWrapperStyle={{ gap: 10 }}
       />
+     </View> 
   );
 }
 
 const styles = StyleSheet.create({
   container : {
-    flex: 1,
-    alignItems: "flex-start",
+    backgroundColor: Colors.light.tint
   }
 })
