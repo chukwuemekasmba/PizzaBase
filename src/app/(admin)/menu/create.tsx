@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
+import { useCreateProduct } from '@/src/api/products';
 
 const CreateScreen = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -18,9 +19,12 @@ const CreateScreen = () => {
   const { id } = useLocalSearchParams();
   const isUpdating = !!id;
 
+  const { mutate: createProduct } = useCreateProduct();
+
   const resetFields = () => {
     setName('');
     setPrice('');
+    setImage('');
   }
 
   const validateInput = () => {
@@ -40,16 +44,16 @@ const CreateScreen = () => {
     return true;
   };
 
+
   const onCreate = () => {
     if (!validateInput()) {
       return;
     }
 
-    console.warn('Creating dish');
+    console.warn('Creating Pizza Item:', name);
+    createProduct({ name, price: parseFloat(price), image })
 
-    setName('');
-    setPrice('');
-    setImage('');
+    resetFields();
     router.back();
   };
 
