@@ -9,22 +9,24 @@ import { HelloWave } from '@/components/HelloWave';
 
 import { defaultPizzaImage } from '@/src/constants/Images';
 
-import products from '@/assets/data/products';
 import { PizzaSize } from '@/src/types';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/providers/CartProvider';
+import { useProduct } from '@/src/api/products';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetailScreen = () => {
-  const { id } = useLocalSearchParams();
-  const colorScheme = useColorScheme();
+  const router = useRouter();
   const { addItem } = useCart();
-  const product = products.find((p) => p.id.toString() === id);
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
+
+  const { data: product, error, isLoading } = useProduct(id);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
 
-  const router = useRouter();
+  const colorScheme = useColorScheme();
 
   const addToCart = () => {
     if (!product) {
