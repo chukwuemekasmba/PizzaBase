@@ -51,10 +51,14 @@ const CreateScreen = () => {
     }
 
     console.warn('Creating Pizza Item:', name);
-    createProduct({ name, price: parseFloat(price), image })
+    
+    createProduct({ name, price: parseFloat(price), image }, {
+      onSuccess: () => {
+        resetFields();
+        router.back();
+      }
+    });
 
-    resetFields();
-    router.back();
   };
 
   const onDelete = () => {

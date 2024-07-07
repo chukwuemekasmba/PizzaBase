@@ -1,9 +1,11 @@
 import { StyleSheet, FlatList, SafeAreaView } from 'react-native';
-import products from '@/assets/data/products';
+import { useProductList } from '@/src/api/products';
 
 import ProductListItem from "@/src/components/ProductListItem";
 
 export default function HomeScreen() {
+  const { data: products, error, isLoading } = useProductList();
+
   return (
       <FlatList
         data={products}
