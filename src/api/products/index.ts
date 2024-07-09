@@ -54,7 +54,7 @@ export const useCreateProduct = () => {
     },
 
     async onSuccess () {
-      await queryClient.invalidateQueries(['products']);
+      await queryClient.invalidateQueries({ queryKey: ['products']});
     }
   })
 };
@@ -82,8 +82,8 @@ export const useUpdateProduct = () => {
     },
     
     async onSuccess(_, { id }) {
-      await queryClient.invalidateQueries(['products']);
-      await queryClient.invalidateQueries(['products', id]);
+      await queryClient.invalidateQueries({ queryKey: ['products']});
+      await queryClient.invalidateQueries({ queryKey: ['products', id]});
     },
   });
 };
