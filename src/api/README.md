@@ -15,9 +15,9 @@ api/
 ├── user/
 │   ├── getUserProfile.ts
 │   ├── updateUserProfile.ts
-├── data/
+├── products/
 │   ├── fetchData.ts
-│   ├── sendData.ts
+│   ├── index.ts
 ```
 
 ### `auth/`
