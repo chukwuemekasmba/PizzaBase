@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
-import { useCreateProduct, useUpdateProduct } from '@/src/api/products';
+import { useCreateProduct, useDeleteProduct, useUpdateProduct } from '@/src/api/products';
 
 const CreateScreen = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -16,12 +16,15 @@ const CreateScreen = () => {
   const [errors, setErrors] = useState('');
 
   const router = useRouter();
-  const { id: idString } = useLocalSearchParams();
-  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
-  const isUpdating = !!id;
+  const { id: idString } = useLocalSearchParams<{id: string}>();
+  const id = parseFloat(
+    typeof idString === 'string' ? idString : idString?.[0]
+  );
+  const isUpdating = !!idString;
 
   const { mutate: createProduct } = useCreateProduct();
   const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const resetFields = () => {
     setName('');
@@ -75,7 +78,14 @@ const CreateScreen = () => {
   }
 
   const onDelete = () => {
-    console.warn('DELETE!!!!!');
+    if (!validateInput) return 
+
+    deleteProduct(id , {
+      onSuccess: () => {
+        router.back();
+      }
+    }) 
+    
   }
 
   const pickImage = async () => {
@@ -139,6 +149,7 @@ const CreateScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     padding: 10,

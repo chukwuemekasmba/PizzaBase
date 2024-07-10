@@ -21,7 +21,9 @@ const ProductDetailScreen = () => {
   const router = useRouter();
   const { addItem } = useCart();
   const { id: idString } = useLocalSearchParams();
-  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
+  const id = parseFloat(
+    typeof idString === 'string' ? idString : idString?.[0]
+  );
 
   const { data: product, error, isLoading } = useProduct(id);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
@@ -56,7 +58,10 @@ const ProductDetailScreen = () => {
           headerShown: true, 
           headerBackTitleVisible: false,
           headerRight: () => (
-            <Link href={`(admin)/menu/create/?id=${id}`} asChild>
+            <Link 
+              asChild
+              href={`(admin)/menu/create/?id=${id}`}
+            >
               <Pressable>
                 {({ pressed }) => (
                   <Ionicons 
