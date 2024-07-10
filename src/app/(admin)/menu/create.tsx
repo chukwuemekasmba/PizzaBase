@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
-import { useCreateProduct } from '@/src/api/products';
+import { useCreateProduct, useUpdateProduct } from '@/src/api/products';
 
 const CreateScreen = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -16,10 +16,12 @@ const CreateScreen = () => {
   const [errors, setErrors] = useState('');
 
   const router = useRouter();
-  const { id } = useLocalSearchParams();
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
   const isUpdating = !!id;
 
   const { mutate: createProduct } = useCreateProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
 
   const resetFields = () => {
     setName('');
@@ -61,6 +63,17 @@ const CreateScreen = () => {
 
   };
 
+  const onUpdate = () => {
+    if (!validateInput) return 
+
+    updateProduct({ id, name, price: parseFloat(price), image}, {
+      onSuccess: () => {
+        resetFields();
+        router.back();
+      }
+    })
+  }
+
   const onDelete = () => {
     console.warn('DELETE!!!!!');
   }
@@ -73,8 +86,6 @@ const CreateScreen = () => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -123,7 +134,7 @@ const CreateScreen = () => {
         keyboardType="numeric"
       />
       <Text style={styles.error}>{errors}</Text>
-      <Button onPress={onCreate} text="Create" />
+      <Button onPress={onCreate} text={ isUpdating ? "Update" : "Create"} />
       { isUpdating && <Button mode="outline" onPress={confirmDelete} text="Delete" />}
     </View>
   );
