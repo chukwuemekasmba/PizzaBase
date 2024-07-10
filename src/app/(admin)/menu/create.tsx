@@ -134,7 +134,7 @@ const CreateScreen = () => {
         keyboardType="numeric"
       />
       <Text style={styles.error}>{errors}</Text>
-      <Button onPress={onCreate} text={ isUpdating ? "Update" : "Create"} />
+      <Button onPress={ isUpdating ? onUpdate : onCreate} text={ isUpdating ? "Update" : "Create"} />
       { isUpdating && <Button mode="outline" onPress={confirmDelete} text="Delete" />}
     </View>
   );
