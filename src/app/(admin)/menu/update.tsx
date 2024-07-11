@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
-import { useCreateProduct } from '@/src/api/products';
+import { useDeleteProduct, useUpdateProduct } from '@/src/api/products';
 
 const CreateScreen = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -16,8 +16,11 @@ const CreateScreen = () => {
   const [errors, setErrors] = useState('');
 
   const router = useRouter();
+  const { id: idString } = useLocalSearchParams<{id?: string}>();
+  const id = parseFloat(idString !== undefined ? idString : idString[0]);
 
-  const { mutate: createProduct } = useCreateProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const resetFields = () => {
     setName('');
@@ -42,22 +45,27 @@ const CreateScreen = () => {
     return true;
   };
 
+  const onUpdate = () => {
+    if (!validateInput) return 
 
-  const onCreate = () => {
-    if (!validateInput()) {
-      return;
-    }
-
-    console.warn('Creating Pizza Item:', name);
-    
-    createProduct({ name, price: parseFloat(price), image }, {
+    updateProduct({ id, name, price: parseFloat(price), image}, {
       onSuccess: () => {
         resetFields();
         router.back();
       }
-    });
+    })
+  }
 
-  };
+  const onDelete = () => {
+    if (!validateInput) return 
+
+    deleteProduct(id , {
+      onSuccess: () => {
+        router.back();
+      }
+    }) 
+
+  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -73,9 +81,22 @@ const CreateScreen = () => {
     }
   };
 
+  const confirmDelete = () => {
+    Alert.alert('Confirm', 'Are you sure you want to delete this product ?', [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: onDelete,
+      }
+    ]);
+  };
+
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerTitle: 'Create Product' }} />
+      <Stack.Screen options={{ headerTitle: 'Update Product' }} />
       <Image
         source={{ uri: image || defaultPizzaImage }}
         style={styles.image}
@@ -102,7 +123,8 @@ const CreateScreen = () => {
         keyboardType="numeric"
       />
       <Text style={styles.error}>{errors}</Text>
-      <Button onPress={ onCreate} text={ "Create"} />
+      <Button onPress={onUpdate} text={"Update"} />
+      <Button mode="outline" onPress={confirmDelete} text="Delete" />
     </View>
   );
 };

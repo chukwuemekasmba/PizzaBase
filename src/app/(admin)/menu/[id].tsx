@@ -22,7 +22,7 @@ const ProductDetailScreen = () => {
   const { addItem } = useCart();
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(
-    typeof idString === 'string' ? idString : idString?.[0]
+    typeof idString === 'string' ? idString : idString[0]
   );
 
   const { data: product, error, isLoading } = useProduct(id);
@@ -60,7 +60,7 @@ const ProductDetailScreen = () => {
           headerRight: () => (
             <Link 
               asChild
-              href={`(admin)/menu/create/?id=${id}`}
+              href={`(admin)/menu/update/?id=${id}`}
             >
               <Pressable>
                 {({ pressed }) => (
