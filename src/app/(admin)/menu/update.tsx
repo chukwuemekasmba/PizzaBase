@@ -61,7 +61,8 @@ const CreateScreen = () => {
 
     deleteProduct(id , {
       onSuccess: () => {
-        router.back();
+        resetFields();
+        router.replace('/(admin)');
       }
     }) 
 
