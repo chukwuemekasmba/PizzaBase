@@ -7,9 +7,10 @@ import { ThemedText } from '@/src/components/ThemedText';
 import { Product } from "../types";
 import { Colors } from "@/src/constants/Colors";
 import { defaultPizzaImage } from '@/src/constants/Images';
+import { Tables } from '../database.types';
 
 type ProductListItemProps = {
-  product: Product
+  product: Tables<'products'>;
 }
 
 const ProductListItem = ({ product }: ProductListItemProps) => {

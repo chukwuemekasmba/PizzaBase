@@ -7,30 +7,41 @@ import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import orders from '@/assets/data/orders';
 import OrderListItem from '@/src/components/OrderListItem';
 import OrderItemListItem from '@/src/components/OrderItemListItem';
-import { HelloWave } from '@/src/components/HelloWave';
 
 import { OrderStatusList } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
+import { useOrderItem } from '@/src/api/orders';
 
 const OrderDetail = () => {
-  const { id } = useLocalSearchParams()
+  const { id: idString } = useLocalSearchParams()
+  const id = parseFloat(
+    typeof idString === 'string' ? idString : idString[0]
+  );
+  const { data: order, isLoading, error }  = useOrderItem(id);
 
-  const order = orders.find((item) => item.id.toString() === id)
-
-  if (!order) {
+  if (!order || error ) {
     return (
-      <ThemedView>
-        <ThemedText> Product Not Found </ThemedText>
-        <Link href={'/menu'}>
-          <ThemedText>Go Back Home <HelloWave /> </ThemedText>
+      <ThemedView style={styles.container}>
+        <ThemedText style={styles.name}> Order Not Found </ThemedText>
+        <Link href={'/(admin)/orders/list'}>
+          <ThemedText style={styles.linkText}> Back to Orders </ThemedText>
         </Link>
       </ThemedView>
     )
   }
+  if (isLoading) {
+    return 
+  }
 
   return (
     <ThemedView style={styles.container}>
-      <Stack.Screen options={{ headerShown: true, headerTitle: `Order #${ order !== undefined && order.id }`}} />
+      <Stack.Screen options={{ 
+          headerShown: true, 
+          headerTitle: `Order #${ order !== undefined && order.id }`,
+          headerTintColor: Colors.light.text,
+          headerBackTitle: "Orders"
+        }} 
+      />
       <OrderListItem order={order} />
       <GestureHandlerRootView  style={{ paddingVertical: 15 }}>
         <FlatList
@@ -72,9 +83,31 @@ const OrderDetail = () => {
 export default OrderDetail;
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    flex: 1,
+    padding: 20,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems:"center",
+    backgroundColor: 'white',
+    gap: 20,
+  },
+
   container: {
     flex: 1,
-    padding: 20
+    padding: 20,
+  },
+
+  name: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: Colors.light.text
+  },
+
+  linkText : {
+    color: Colors.light.tint,
+    textDecorationLine: "underline"
   },
 
   footerTitle : {
