@@ -1,5 +1,8 @@
 import { useState, createContext, useContext, PropsWithChildren } from "react";
 import { randomUUID } from 'expo-crypto';
+import { router } from "expo-router";
+
+import { useCreateOrder } from "../api/orders";
 import { CartItem, Tables } from "../types";
 
 type Product = Tables<'products'>;
@@ -10,6 +13,7 @@ type CartType = {
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
   total: number;
   totalQuantity: number;
+  checkout: () => void;
 }
 
 export const CartContext = createContext<CartType>({ 
@@ -18,10 +22,12 @@ export const CartContext = createContext<CartType>({
   updateQuantity: () => {},
   total: 0,
   totalQuantity: 0,
+  checkout: () => { },
 });
 
 const CartProvider = ({ children }: PropsWithChildren ) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const { mutate: createOrder } = useCreateOrder()
 
   const addItem = (product: Product, size: CartItem['size']) => {
     // if already in cart; increment quantity
@@ -70,8 +76,17 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
     setItems([]);
   };
 
+  const checkout = () => {
+    createOrder({ total }, { onSuccess: (data) => {
+      clearCart()
+      router.push(`/(user)/orders/${data.id}`)
+    }
+
+    })
+  }
+
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, total, totalQuantity }} >
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total, totalQuantity, checkout }} >
       { children }
     </CartContext.Provider>
   )
