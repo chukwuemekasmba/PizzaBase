@@ -36,7 +36,8 @@ export const useUserOrderList = () => {
       const { data, error } = await supabase
         .from('orders')
         .select('*')
-        .eq('user_id', id);
+        .eq('user_id', id)
+        .order('created_at', { ascending: false });
 
       if (error) {
         throw new Error(error.message);
@@ -89,7 +90,7 @@ export const useCreateOrder = () => {
     },
 
     async onSuccess () {
-      await queryClient.invalidateQueries({ queryKey: ['products']});
+      await queryClient.invalidateQueries({ queryKey: ['orders']});
     }
   })
 };
