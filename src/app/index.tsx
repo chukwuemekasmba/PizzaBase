@@ -26,6 +26,8 @@ const index = () => {
     await supabase.auth.signOut()
   };
 
+  // console.log(isAdmin);
+
   return (
     <ThemedView style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
       <Link href={'/(user)'} asChild>
