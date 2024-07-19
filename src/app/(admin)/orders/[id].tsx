@@ -4,13 +4,12 @@ import { ThemedText } from '@/src/components/ThemedText';
 import { Stack, useLocalSearchParams, Link } from 'expo-router';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import orders from '@/assets/data/orders';
 import OrderListItem from '@/src/components/OrderListItem';
 import OrderItemListItem from '@/src/components/OrderItemListItem';
 
 import { OrderStatusList } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
-import { useOrderItem } from '@/src/api/orders';
+import { useOrderItem, useUpdateOrder } from '@/src/api/orders';
 
 const OrderDetail = () => {
   const { id: idString } = useLocalSearchParams()
@@ -18,6 +17,11 @@ const OrderDetail = () => {
     typeof idString === 'string' ? idString : idString[0]
   );
   const { data: order, isLoading, error }  = useOrderItem(id);
+  const { mutate: updateOrder } = useUpdateOrder();
+
+  const updateStatus = (status) => {
+    updateOrder({ id: id, updatedFields: { status }})
+  }
 
   if (!order || error ) {
     return (
@@ -55,7 +59,7 @@ const OrderDetail = () => {
                 { OrderStatusList.map((status) => (
                   <Pressable  
                     key={status}
-                    onPress={() => console.warn('Update status')}
+                    onPress={() => updateStatus(status)}
                     style={{
                       borderColor: Colors.light.tabIconDefault,
                       borderWidth: 1,
