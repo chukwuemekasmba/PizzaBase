@@ -91,7 +91,6 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   }
 
   const  saveOrderitems = (order: Tables<'orders'>) => {
-    console.log(items)
     const orderItems = items.map((cartItem) => ({
         order_id: order.id,
         product_id: cartItem.product_id,
