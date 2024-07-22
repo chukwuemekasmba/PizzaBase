@@ -11,6 +11,7 @@ import { HelloWave } from '@/src/components/HelloWave';
 
 import { useOrderItem } from '@/src/api/orders';
 import { Colors } from '@/src/constants/Colors';
+import { useUpdateOrderSubscription } from '@/src/api/orders/subscriptions';
 
 const OrderDetail = () => {
   const { id: idString } = useLocalSearchParams()
@@ -18,6 +19,8 @@ const OrderDetail = () => {
     typeof idString === 'string' ? idString : idString[0]
   );
   const { data: order, isLoading, error }  = useOrderItem(id);
+  
+  useUpdateOrderSubscription(id)
 
   if (!order || error ) {
     return (
