@@ -2,9 +2,9 @@ import React from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
 import { Link, useSegments } from 'expo-router';
 
-import { ThemedText } from '@/src/components/ThemedText';
+import { ThemedText } from './ThemedText';
+import RemoteImage from './RemoteImage';
 
-import { Product } from "../types";
 import { Colors } from "@/src/constants/Colors";
 import { defaultPizzaImage } from '@/src/constants/Images';
 import { Tables } from '../database.types';
@@ -19,8 +19,9 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
   return (
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.productContainer}>
-        <Image 
-          source={{ uri : product.image || defaultPizzaImage }} 
+        <RemoteImage 
+          path={product.image } 
+          fallback={defaultPizzaImage}
           style={styles.productImage} 
           resizeMode='contain'
         />

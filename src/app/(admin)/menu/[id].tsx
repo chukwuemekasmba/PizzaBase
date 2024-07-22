@@ -14,6 +14,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useCart } from '@/providers/CartProvider';
 import { useProduct } from '@/src/api/products';
+import RemoteImage from '@/src/components/RemoteImage';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -77,7 +78,11 @@ const ProductDetailScreen = () => {
           }} 
         />
         <ThemedView>
-          <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.productImage} />
+          <RemoteImage 
+            path={ product?.image } 
+            fallback={defaultPizzaImage}
+            style={styles.productImage} 
+          />
         </ThemedView>
         <ThemedView style={styles.cart}>
           <ThemedText style={ styles.name }> { product.name } </ThemedText>

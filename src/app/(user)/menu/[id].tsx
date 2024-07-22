@@ -14,6 +14,7 @@ import { PizzaSize } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
 import { useCart } from '@/src/providers/CartProvider';
 import { useProduct } from '@/src/api/products';
+import RemoteImage from '@/src/components/RemoteImage';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -62,7 +63,11 @@ const ProductDetailScreen = () => {
           }} 
         />
         <ThemedView>
-          <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.productImage} />
+          <RemoteImage 
+            path={product.image}
+            fallback={defaultPizzaImage} 
+            style={styles.productImage} 
+          />
           <ThemedView style={styles.selectContainer}>
             <ThemedText style={styles.selectTitle}> Select Size </ThemedText>
             <ThemedView style={styles.sizes}>
