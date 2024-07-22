@@ -9,12 +9,16 @@ import { ThemedView } from '@/src/components/ThemedView';
 
 import { Colors } from '@/src/constants/Colors';
 import { useAdminOrderList } from '@/src/api/orders';
+import { useInsertOrderSubscription } from '@/src/api/orders/subscriptions';
 
-export default function TabTwoScreen() {
+export default function Orders() {
   const { 
     data: orders, 
     isLoading, 
     error } = useAdminOrderList({ archived: false });
+
+
+  useInsertOrderSubscription();
 
   if (isLoading) {
     return <ActivityIndicator/>
