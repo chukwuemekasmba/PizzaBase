@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, Alert } from 'react-native';
-import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
+import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from "expo-file-system"
+import { randomUUID } from 'expo-crypto';
+import { decode } from 'base64-arraybuffer';
 
 import Button from '@/components/Button';
 
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
 import { useCreateProduct } from '@/src/api/products';
+import { supabase } from '@/src/lib/supabase';
 
 const CreateScreen = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -42,15 +46,35 @@ const CreateScreen = () => {
     return true;
   };
 
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+  
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, decode(base64), { contentType });
+  
+    if (data) {
+      return data.path;
+    }
+  };
 
-  const onCreate = () => {
+  const onCreate = async () => {
     if (!validateInput()) {
       return;
     }
 
+    const imagePath = await uploadImage();
+
     console.warn('Creating Pizza Item:', name);
     
-    createProduct({ name, price: parseFloat(price), image }, {
+    createProduct({ name, price: parseFloat(price), image: imagePath }, {
       onSuccess: () => {
         resetFields();
         router.back();
@@ -72,6 +96,7 @@ const CreateScreen = () => {
       setImage(result.assets[0].uri);
     }
   };
+  
 
   return (
     <View style={styles.container}>
