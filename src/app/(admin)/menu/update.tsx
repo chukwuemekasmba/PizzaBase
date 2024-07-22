@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, Alert } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from "expo-file-system"
+import { randomUUID } from 'expo-crypto';
+import { decode } from 'base64-arraybuffer';
 
 import Button from '@/components/Button';
 
+import { supabase } from '@/src/lib/supabase';
 import { Colors } from '@/src/constants/Colors';
 import { defaultPizzaImage } from '@/src/constants/Images';
 import { useDeleteProduct, useUpdateProduct } from '@/src/api/products';
@@ -45,10 +49,32 @@ const CreateScreen = () => {
     return true;
   };
 
-  const onUpdate = () => {
+
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+  
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, decode(base64), { contentType });
+  
+    if (data) {
+      return data.path;
+    }
+  };
+
+  const onUpdate = async () => {
     if (!validateInput) return 
 
-    updateProduct({ id, name, price: parseFloat(price), image}, {
+    const imagePath = await uploadImage();
+
+    updateProduct({ id, name, price: parseFloat(price), image: imagePath }, {
       onSuccess: () => {
         resetFields();
         router.back();

@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Stack, useLocalSearchParams, Link } from 'expo-router';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 

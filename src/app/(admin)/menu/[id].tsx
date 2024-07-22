@@ -1,5 +1,5 @@
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Image, StyleSheet, Pressable } from 'react-native'
+import { StyleSheet, Pressable } from 'react-native'
 import { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 
@@ -16,7 +16,6 @@ import { useCart } from '@/providers/CartProvider';
 import { useProduct } from '@/src/api/products';
 import RemoteImage from '@/src/components/RemoteImage';
 
-const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetailScreen = () => {
   const router = useRouter();
