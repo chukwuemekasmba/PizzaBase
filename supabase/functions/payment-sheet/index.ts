@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { stripe } from '../_utils/stripe';
 
 console.log('Hello from Functions!');
@@ -30,3 +30,10 @@ serve(async (req) => {
     });
   }
 });
+
+
+// To invoke:
+// curl -i --request POST 'http://localhost:54321/functions/v1/payment-sheet' \
+//   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
+//   --header 'Content-Type: application/json' \
+//   --data '{"amount":1150}'
