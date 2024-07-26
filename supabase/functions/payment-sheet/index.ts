@@ -9,7 +9,7 @@ serve(async (req) => {
 
     // Create a PaymentIntent so that the SDK can charge the logged in customer.
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1099,
+      amount: amount,
       currency: 'usd',
       // customer: customer,
     });
