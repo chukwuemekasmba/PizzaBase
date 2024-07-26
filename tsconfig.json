@@ -9,7 +9,8 @@
       "@/constants/*": ["src/constants/*"],
       "@/providers/*": ["src/providers/*"],
       "@/hooks/*": ["src/hooks/*"]
-    }
+    },
+    "allowImportingTsExtensions": true
   },
   "include": [
     "**/*.ts",
