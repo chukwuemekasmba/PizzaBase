@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
 import { StyleSheet, FlatList, ActivityIndicator, View } from 'react-native';
-
-import { supabase } from "@/src/lib/supabase";
-import { useQuery } from "@tanstack/react-query";
 
 import ProductListItem from "@/src/components/ProductListItem";
 import { ThemedView } from "@/src/components/ThemedView";

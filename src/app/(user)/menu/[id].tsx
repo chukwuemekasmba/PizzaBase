@@ -1,5 +1,5 @@
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Image, StyleSheet, Pressable } from 'react-native'
+import { StyleSheet, Pressable } from 'react-native'
 import { useState } from "react";
 
 import Button from "@/components/Button";
@@ -9,7 +9,6 @@ import { HelloWave } from '@/components/HelloWave';
 
 import { defaultPizzaImage } from '@/constants/Images';
 
-import products from '@/assets/data/products';
 import { PizzaSize } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
 import { useCart } from '@/src/providers/CartProvider';

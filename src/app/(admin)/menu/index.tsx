@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { FlatList } from 'react-native';
 import { useProductList } from '@/src/api/products';
 
 import ProductListItem from "@/src/components/ProductListItem";
@@ -16,10 +16,3 @@ export default function HomeScreen() {
       />
   );
 }
-
-const styles = StyleSheet.create({
-  container : {
-    flex: 1,
-    alignItems: "flex-start",
-  }
-})
