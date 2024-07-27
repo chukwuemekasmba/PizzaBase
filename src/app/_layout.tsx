@@ -1,9 +1,10 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { useEffect } from 'react';
+import { Stack } from 'expo-router';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 
@@ -31,6 +32,11 @@ export default function RootLayout() {
   }
 
   return (
+    <StripeProvider
+        publishableKey={
+          process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
+        }
+      >
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <AuthProvider>
           <QueryProvider>
@@ -47,5 +53,6 @@ export default function RootLayout() {
           </QueryProvider>
         </AuthProvider>
       </ThemeProvider>
+  </StripeProvider>
   );
 }
