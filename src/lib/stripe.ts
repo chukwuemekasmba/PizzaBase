@@ -5,19 +5,18 @@ import {
   presentPaymentSheet,
 } from '@stripe/stripe-react-native';
 
-const token = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+const token = process.env.EXPO_PUBLIC_SUPABASE_SECRET_KEY
 
 const fetchPaymentSheetParams = async (amount: number) => {
   const { data, error } = await supabase.functions.invoke(
     'payment-sheet', {
       body: { amount },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`      }
     }
   );
 
-  console.log(data, error);
+  console.log(data, error?.message);
   
   if (data) {
     console.log(data);
