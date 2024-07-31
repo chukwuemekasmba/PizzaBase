@@ -5,15 +5,26 @@ import {
   presentPaymentSheet,
 } from '@stripe/stripe-react-native';
 
+const token = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+
 const fetchPaymentSheetParams = async (amount: number) => {
-  const { data, error } = await supabase.functions.invoke('payment-sheet', {
-    body: { amount },
-  });
+  const { data, error } = await supabase.functions.invoke(
+    'payment-sheet', {
+      body: { amount },
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  console.log(data, error);
+  
   if (data) {
     console.log(data);
     return data;
-  }
-  Alert.alert('Error fetching payment sheet params');
+  };
+
+  Alert.alert(`Error: ${error?.message ?? 'no data'}`);;
   return {};
 };
 
@@ -22,6 +33,8 @@ export const initialisePaymentSheet = async (amount: number) => {
 
   const { paymentIntent, publishableKey, customer, ephemeralKey } =
     await fetchPaymentSheetParams(amount);
+
+  console.log(paymentIntent, publishableKey, customer, ephemeralKey)
 
   if (!paymentIntent || !publishableKey) return;
 

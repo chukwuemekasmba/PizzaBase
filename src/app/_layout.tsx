@@ -32,12 +32,12 @@ export default function RootLayout() {
   }
 
   return (
-    <StripeProvider
-        publishableKey={
-          process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
-        }
-      >
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StripeProvider
+          publishableKey={
+            process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
+          }
+        >
         <AuthProvider>
           <QueryProvider>
             <CartProvider>
@@ -52,7 +52,7 @@ export default function RootLayout() {
             </CartProvider>
           </QueryProvider>
         </AuthProvider>
-      </ThemeProvider>
-  </StripeProvider>
+      </StripeProvider>
+    </ThemeProvider>
   );
 }
