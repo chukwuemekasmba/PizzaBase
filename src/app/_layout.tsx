@@ -1,5 +1,5 @@
 import 'react-native-reanimated';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -12,7 +12,6 @@ import CartProvider from '../providers/CartProvider';
 import AuthProvider from '../providers/AuthProvider';
 import QueryProvider from '../providers/QueryProvider';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -20,10 +19,17 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const [publishableKey, setPublishableKey] = useState();
+
+  const fetchPublishableKey = async () => {
+    const key = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    setPublishableKey(key);
+  }
 
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      fetchPublishableKey()
     }
   }, [loaded]);
 
@@ -33,11 +39,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <StripeProvider
-          publishableKey={
-            process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
-          }
-        >
+      <StripeProvider publishableKey={publishableKey}>
         <AuthProvider>
           <QueryProvider>
             <CartProvider>

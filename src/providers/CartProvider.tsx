@@ -1,11 +1,13 @@
-import { useState, createContext, useContext, PropsWithChildren } from "react";
+import { useState, useEffect, createContext, useContext, PropsWithChildren, useCallback } from "react";
 import { randomUUID } from 'expo-crypto';
+import { Linking, Alert } from "react-native";
 import { useRouter } from "expo-router";
+import { useStripe } from '@stripe/stripe-react-native';
 
 import { CartItem, Tables } from "../types";
 import { useCreateOrder } from "../api/orders";
 import { useInsertOrderItems } from "../api/order-items";
-import { initialisePaymentSheet, openPaymentSheet } from "../lib/stripe";
+import { fetchPaymentSheetParams } from "@/src/lib/stripe";
 
 type Product = Tables<'products'>;
 
@@ -35,6 +37,29 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
 
   const router = useRouter();
 
+  const { initPaymentSheet, presentPaymentSheet, handleURLCallback } = useStripe();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      handleDeepLink(initialUrl);
+    };
+
+    getUrlAsync();
+
+    const deepLinkListener = Linking.addEventListener(
+      'url',
+      (event: { url: string }) => {
+        handleDeepLink(event.url);
+      }
+    );
+
+    initialisePaymentSheet();
+
+    return () => deepLinkListener.remove();
+  }, [handleDeepLink]);
+  
   const addItem = (product: Product, size: CartItem['size']) => {
     // if already in cart; increment quantity
     const existingItem = items.find(
@@ -82,13 +107,70 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
     setItems([]);
   };
 
-  const checkout = async () => {
-    await initialisePaymentSheet(Math.floor(total * 100 ));
-    const payed = await openPaymentSheet();
+  const handleDeepLink = useCallback(
+   async (url: string | null) => {
+      const stripeHandled = await handleURLCallback(url);
+      if (stripeHandled) {
 
-    if (!payed) {
-      return 
+      } else {
+        //
+      }
+    },
+    [handleURLCallback],
+  );
+  
+
+  const initialisePaymentSheet = async () => {
+    const {
+      paymentIntent,
+      ephemeralKey,
+      customer,
+    } = await fetchPaymentSheetParams();
+
+    const { error } = await initPaymentSheet({
+      merchantDisplayName: "PizzaBase",
+      customerId: customer,
+      customerEphemeralKeySecret: ephemeralKey,
+      paymentIntentClientSecret: paymentIntent,
+      allowsDelayedPaymentMethods: true,
+      defaultBillingDetails: {
+        name: 'John Doe'
+      },
+      returnURL: "http://localhost:8081/stripe-redirect",
+      intentConfiguration: {
+        mode: {
+          amount: Math.floor(total * 100),
+          currencyCode: 'USD',
+        },
+        confirmHandler: confirmHandler,
+      }
+    });
+
+    if (!error) {
+      setLoading(true);
+    };
+  }
+
+  const confirmHandler = async (
+    paymentMethod, 
+    shouldSavePaymentMethod, 
+    intentCreationCallback
+  ) => {
+
     }
+
+  const openPaymentSheet = async () => {
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Alert.alert('Success', 'Your order is confirmed!');
+    }
+  };
+
+  const checkout = async () => {
+    await openPaymentSheet();
 
     createOrder(
       { total }, 
@@ -119,7 +201,7 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   }
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, total, totalQuantity, checkout }} >
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total, totalQuantity, checkout, loading }} >
       { children }
     </CartContext.Provider>
   )

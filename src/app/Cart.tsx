@@ -10,7 +10,7 @@ import CartListItem from '../components/CartListItem';
 import Button from '../components/Button';
 
 const Cart = () => {
-  const { total, items, totalQuantity, checkout } = useCart();
+  const { total, items, totalQuantity, checkout, loading } = useCart();
 
   return (
     <ThemedView style={styles.cart}>
@@ -24,7 +24,7 @@ const Cart = () => {
         <ThemedText style={styles.quantity}>Quantity: { totalQuantity } { totalQuantity == 1 ? "Item" : "Items"} </ThemedText>
         <ThemedText style={styles.price}>Total: ${ total }</ThemedText>
       </ThemedView>
-      <Button onPress={checkout} text='Checkout' />
+      <Button disabled={!loading} onPress={checkout} text='Checkout' />
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </ThemedView>
   )
