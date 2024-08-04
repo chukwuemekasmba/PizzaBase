@@ -17,7 +17,11 @@ const Button = forwardRef<View | null, ButtonProps>(
     const colorScheme = useColorScheme();
 
     return (
-      <Pressable ref={ref} {...pressableProps} style={mode == 'outline' || disabled ? styles.outline : styles.container}>
+      <Pressable 
+        ref={ref} {...pressableProps} 
+        style={mode == 'outline' || disabled ? styles.outline : styles.container}
+        disabled={disabled}
+      >
         { ({ pressed }) => (
           <Text 
             style={ mode == 'outline' || disabled ? styles.outlineText : styles.text}>

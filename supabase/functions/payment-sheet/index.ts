@@ -1,28 +1,33 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
-// Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { stripe } from '../_utils/stripe.ts';
+import { createOrRetrieveProfile } from "../_utils/supabase";
 
-console.log("Hello from Functions!")
+console.log("Payment sheet handler up and running!");
 
 Deno.serve(async (req) => {
   try {
     const { amount } = await req.json();
 
+    const authHeader = req.headers.get("Authorization")!;
+
+    const customer = await createOrRetrieveProfile(authHeader);
+
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      { customer: customer },
+    );
+
     // Create a PaymentIntent so that the SDK can charge the logged in customer.
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: 'usd',
-      // customer: customer,
+      customer: customer,
     });
+
     const res = {
       publishableKey: Deno.env.get('EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY'),
       paymentIntent: paymentIntent.client_secret,
-      // ephemeralKey: ephemeralKey.secret,
-      // customer: customer,
+      ephemeralKey: ephemeralKey.secret,
+      customer: customer,
     };
     return new Response(JSON.stringify(res), {
       headers: { 'Content-Type': 'application/json' },

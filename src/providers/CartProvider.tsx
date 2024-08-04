@@ -37,28 +37,15 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
 
   const router = useRouter();
 
-  const { initPaymentSheet, presentPaymentSheet, handleURLCallback } = useStripe();
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getUrlAsync = async () => {
-      const initialUrl = await Linking.getInitialURL();
-      handleDeepLink(initialUrl);
-    };
-
-    getUrlAsync();
-
-    const deepLinkListener = Linking.addEventListener(
-      'url',
-      (event: { url: string }) => {
-        handleDeepLink(event.url);
-      }
-    );
-
-    initialisePaymentSheet();
-
-    return () => deepLinkListener.remove();
-  }, [handleDeepLink]);
+    async function initialize() {
+      initialisePaymentSheet();
+    }
+    initialize();
+  }, []);
   
   const addItem = (product: Product, size: CartItem['size']) => {
     // if already in cart; increment quantity
@@ -107,26 +94,15 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
     setItems([]);
   };
 
-  const handleDeepLink = useCallback(
-   async (url: string | null) => {
-      const stripeHandled = await handleURLCallback(url);
-      if (stripeHandled) {
-
-      } else {
-        //
-      }
-    },
-    [handleURLCallback],
-  );
-  
 
   const initialisePaymentSheet = async () => {
     const {
       paymentIntent,
       ephemeralKey,
       customer,
+      stripe_pk
     } = await fetchPaymentSheetParams();
-
+    
     const { error } = await initPaymentSheet({
       merchantDisplayName: "PizzaBase",
       customerId: customer,
@@ -146,18 +122,11 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
       }
     });
 
-    if (!error) {
-      setLoading(true);
-    };
+    console.log(error);
+    // if (!error) {
+    //   setLoading(true);
+    // };
   }
-
-  const confirmHandler = async (
-    paymentMethod, 
-    shouldSavePaymentMethod, 
-    intentCreationCallback
-  ) => {
-
-    }
 
   const openPaymentSheet = async () => {
     const { error } = await presentPaymentSheet();
@@ -170,7 +139,8 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   };
 
   const checkout = async () => {
-    await openPaymentSheet();
+    console.log(loading)
+    openPaymentSheet();
 
     createOrder(
       { total }, 

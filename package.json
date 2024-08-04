@@ -18,6 +18,7 @@
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.0.2",
+    "@stripe/stripe-react-native": "0.37.2",
     "@supabase/supabase-js": "^2.44.2",
     "@tanstack/react-query": "^5.50.1",
     "base64-arraybuffer": "^1.0.2",
@@ -46,8 +47,7 @@
     "react-native-screens": "3.31.1",
     "react-native-tab-view": "^3.5.2",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-web": "~0.19.10",
-    "@stripe/stripe-react-native": "0.37.2"
+    "react-native-web": "~0.19.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
