@@ -7,7 +7,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { HelloWave } from '@/components/HelloWave';
 
-import { defaultPizzaImage } from '@/constants/Images';
+import { defaultPizzaImage } from '@/src/constants/Images';
 
 import { PizzaSize } from '@/src/types';
 import { Colors } from '@/src/constants/Colors';
