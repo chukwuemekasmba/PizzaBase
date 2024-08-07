@@ -18,6 +18,7 @@ type CartType = {
   total: number;
   totalQuantity: number;
   checkout: () => void;
+  loading: boolean;
 }
 
 export const CartContext = createContext<CartType>({ 
@@ -27,6 +28,7 @@ export const CartContext = createContext<CartType>({
   total: 0,
   totalQuantity: 0,
   checkout: () => { },
+  loading: false,
 });
 
 const CartProvider = ({ children }: PropsWithChildren ) => {
@@ -43,6 +45,7 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   useEffect(() => {
     async function initialize() {
       initialisePaymentSheet();
+      setLoading(true)
     }
     initialize();
   }, []);
@@ -143,7 +146,7 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   };
 
   const checkout = async () => {
-    console.log(loading)
+    // console.log(loading)
     openPaymentSheet();
 
     createOrder(
