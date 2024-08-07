@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { stripe } from '../_utils/stripe';
-import { createOrRetrieveCustomer } from "../_utils/stripe";
+import { stripe } from '../_utils/stripe.ts';
+import { createOrRetrieveCustomer } from "../_utils/stripe.ts";
 
 serve(async (req) => {
   try {

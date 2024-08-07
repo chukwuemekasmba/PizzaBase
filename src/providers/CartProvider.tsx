@@ -128,6 +128,10 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
     // };
   }
 
+  const confirmHandler = () => {
+
+  };
+
   const openPaymentSheet = async () => {
     const { error } = await presentPaymentSheet();
 
