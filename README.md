@@ -2,7 +2,7 @@
 
 A pizza ordering app and admin platform.
 
-## Tooling
+## Tooling 
 
 - React Native
 - Expo
