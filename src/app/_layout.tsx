@@ -11,6 +11,7 @@ import { useColorScheme } from '@/src/hooks/useColorScheme';
 import CartProvider from '../providers/CartProvider';
 import AuthProvider from '../providers/AuthProvider';
 import QueryProvider from '../providers/QueryProvider';
+import NotificationProvider from "../providers/NotificationProvider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,16 +43,18 @@ export default function RootLayout() {
       <StripeProvider publishableKey={publishableKey}>
         <AuthProvider>
           <QueryProvider>
-            <CartProvider>
-              <Stack>
-                <Stack.Screen name="+not-found" />
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-                <Stack.Screen name="(user)" options={{ headerShown: false }} />
-                <Stack.Screen name="cart" options={{ presentation: 'modal', headerTitle: "Cart" }} />
-              </Stack>
-            </CartProvider>
+            <NotificationProvider>
+              <CartProvider>
+                <Stack>
+                  <Stack.Screen name="+not-found" />
+                  <Stack.Screen name="index" options={{ headerShown: false }} />
+                  <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(user)" options={{ headerShown: false }} />
+                  <Stack.Screen name="cart" options={{ presentation: 'modal', headerTitle: "Cart" }} />
+                </Stack>
+              </CartProvider>
+            </NotificationProvider>
           </QueryProvider>
         </AuthProvider>
       </StripeProvider>
