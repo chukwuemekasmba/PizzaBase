@@ -13,7 +13,7 @@ A pizza ordering app and admin platform.
 - User and Admin User Interface
 - Food Menu & Cart
 - User & Admin Authentication
-- Ordering & Order Status
+- Ordering & Order Status with Updates
 - Backend: Create, Read, Edit and Delete Products.
 - Supabase Database
 - Stripe Payments
