@@ -7,7 +7,7 @@ import { useStripe } from '@stripe/stripe-react-native';
 import { CartItem, Tables } from "../types";
 import { useCreateOrder } from "../api/orders";
 import { useInsertOrderItems } from "../api/order-items";
-import { fetchPaymentSheetParams } from "@/src/lib/stripe";
+import { initialisePaymentSheet, openPaymentSheet } from "@/src/lib/stripe";
 
 type Product = Tables<'products'>;
 
@@ -98,63 +98,21 @@ const CartProvider = ({ children }: PropsWithChildren ) => {
   };
 
 
-  const initialisePaymentSheet = async () => {
-    const {
-      paymentIntent,
-      ephemeralKey,
-      customer,
-      stripe_pk
-    } = await fetchPaymentSheetParams();
-    
-    const { error } = await initPaymentSheet({
-      merchantDisplayName: "PizzaBase",
-      customerId: customer,
-      customerEphemeralKeySecret: ephemeralKey,
-      paymentIntentClientSecret: paymentIntent,
-      allowsDelayedPaymentMethods: true,
-      defaultBillingDetails: {
-        name: 'John Doe'
-      },
-      returnURL: "http://localhost:8081/stripe-redirect",
-      intentConfiguration: {
-        mode: {
-          amount: Math.floor(total * 100),
-          currencyCode: 'USD',
-        },
-        confirmHandler: confirmHandler,
-      }
-    });
-
-    console.log(error);
-    // if (!error) {
-    //   setLoading(true);
-    // };
-  }
-
-  const confirmHandler = () => {
-
-  };
-
-  const openPaymentSheet = async () => {
-    const { error } = await presentPaymentSheet();
-
-    if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-    } else {
-      Alert.alert('Success', 'Your order is confirmed!');
-    }
-  };
 
   const checkout = async () => {
-    // console.log(loading)
-    openPaymentSheet();
+    await initialisePaymentSheet(
+      Math.round(total * 100),
+      "usd",
+    );
 
-    createOrder(
-      { total }, 
-      { 
-        onSuccess: saveOrderitems
-      }
-    )
+    const payed = await openPaymentSheet();
+
+    if (!items) return;
+    
+
+    createOrder({ total }, { 
+      onSuccess: saveOrderitems
+    });
   }
 
   const  saveOrderitems = (order: Tables<'orders'>) => {

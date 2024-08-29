@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import { supabase } from './supabase';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
 
-export const fetchPaymentSheetParams = async (amount: number, currency: string ) => {
+const fetchPaymentSheetParams = async (amount: number, currency: string ) => {
   const { data, error } = await supabase.functions.invoke(
     "payment-sheet", {
       body: { amount: amount, currency: currency }
@@ -30,7 +30,7 @@ export const initialisePaymentSheet = async (
   if (!paymentIntent || !publishableKey) return;
 
   await initPaymentSheet({
-    merchantDisplayName: "ExpoDash",
+    merchantDisplayName: "PizzaBase",
     paymentIntentClientSecret: paymentIntent,
     returnURL: "your-app://stripe-redirect",
     defaultBillingDetails: {

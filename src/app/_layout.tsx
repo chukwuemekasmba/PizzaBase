@@ -43,7 +43,6 @@ export default function RootLayout() {
       <StripeProvider publishableKey={publishableKey}>
         <AuthProvider>
           <QueryProvider>
-            <NotificationProvider>
               <CartProvider>
                 <Stack>
                   <Stack.Screen name="+not-found" />
@@ -54,7 +53,6 @@ export default function RootLayout() {
                   <Stack.Screen name="cart" options={{ presentation: 'modal', headerTitle: "Cart" }} />
                 </Stack>
               </CartProvider>
-            </NotificationProvider>
           </QueryProvider>
         </AuthProvider>
       </StripeProvider>
